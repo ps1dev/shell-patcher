@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>PS1 BIOS shell patcher</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="data:image/x-icon;base64,AAABAAMAEBAQAAEABAAoAQAANgAAACAgEAABAAQA6AIAAF4BAABAQBAAAQAEAGgKAABGBAAAKAAAABAAAAAgAAAAAQAEAAAAAACAAAAAAAAAAAAAAAAQAAAAEAAAAExwRwAAAAAAICAgABgYGAAQEBAAODg4ADAwMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREREREREFZWVlZWVlYQJERERERERBAjMzMzMzM0ECMiIiIiIjQQNDMzMzMzNBA0MzMzMyI0ECMiIzMzMzQQIyIjMyIiNBAjMzMzMzM0EFZWVlZWVlYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAD//wAAwAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIABAAD//wAA//8AAP//AAAoAAAAIAAAAEAAAAABAAQAAAAAAAACAAAAAAAAAAAAABAAAAAQAAAATHBHAAAAAAAgICAAGBgYABAQEAAwMDAAODg4ACgoKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAQEBAABRUVFRUVFRUVFRUVFRUQAAcXFxcXFxcXFxcXFxcXEQAkREREREREREREREREREEAIzMzMzMzMzMzMzMzMzNBACNEMzMzMzMzMzMzMzMzQQAjRDIiIiIiIiIiIiIzM0EAIzMyIiIiIiIiIiIiMzNBACMzMiIiIiIiIiIiIjMzQQA0MzMzMzMzMzMzMzMzM0EAI0MzMzMzMzMzMiIiMzNBACNDMzMzMzMzMzIiIjMzQQA0MzMzMzMzMzMyIiIzM0EAIzMyIiIjMzMzMzMzMzNBACMzMiIiIzMzIiIiIjMzQQAjMzIiIiMzMyIiIiIzM0EAIzMyIiIjMzMiIiIiMzNBACMzMzMzMzMzMzMzMzMzQQAiIiIiIiIiIiIiIiIiIiAABRUVFRUVFRUVFRUVFRUQAAYGBgYGBgYGBgYGBgYGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////////////////////////qqqqrwAAAA8AAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAADwAAAA9VVVVf///////////////////////////////8oAAAAQAAAAIAAAAABAAQAAAAAAAAIAAAAAAAAAAAAABAAAAAQAAAATHBHAAAAAAAYGBgAICAgABAQEAAwMDAAODg4ACgoKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARABEAEQARABEAEQARABEAEQARABEAEQARABEAAAAAABEAEQARABEAEQARABEAEQARABEAEQARABEAEQAAAABVEVURVRFVEVURVRFVEVURVRFVEVURVRFVEVURAAAAAFURVRFVEVURVRFVEVURVRFVEVURVRFVEVURVREAAAAAdxF3EXcRdxF3EXcRdxF3EXcRdxF3EXcRdxF3EREAAAB3EXcRdxF3EXcRdxF3EXcRdxF3EXcRdxF3EXcREQAAM0REREREREREREREREREREREREREREREREREREQRAAAzRERERERERERERERERERERERERERERERERERERBEAADMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiJEEQAAMyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIkQRAAAzIkREIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiRBEAADMiREQiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiJEEQAAMyJERCIzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIkQRAAAzIkREIjMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiRBEAADMiIiIiMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiJEEQAAMyIiIiIzMzMzMzMzMzMzMzMzMzMzMzMzIiIiIkQRAAAzIiIiIjMzMzMzMzMzMzMzMzMzMzMzMzMiIiIiRBEAADMiIiIiMzMzMzMzMzMzMzMzMzMzMzMzMyIiIiJEEQAAIkQiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIkQRAAAiRCIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiRBEAADMiRCIiIiIiIiIiIiIiIiIiIiIzMzMzMyIiIiJEEQAAMyJEIiIiIiIiIiIiIiIiIiIiIjMzMzMzIiIiIkQRAAAzIkQiIiIiIiIiIiIiIiIiIiIiMzMzMzMiIiIiRBEAADMiRCIiIiIiIiIiIiIiIiIiIiIzMzMzMyIiIiJEEQAAIkQiIiIiIiIiIiIiIiIiIiIiIjMzMzMzIiIiIkQRAAAiRCIiIiIiIiIiIiIiIiIiIiIiMzMzMzMiIiIiRBEAADMiIiIiMzMzMzMzIiIiIiIiIiIiIiIiIiIiIiJEEQAAMyIiIiIzMzMzMzMiIiIiIiIiIiIiIiIiIiIiIkQRAAAzIiIiIjMzMzMzMyIiIiIiMzMzMzMzMzMiIiIiRBEAADMiIiIiMzMzMzMzIiIiIiIzMzMzMzMzMyIiIiJEEQAAMyIiIiIzMzMzMzMiIiIiIjMzMzMzMzMzIiIiIkQRAAAzIiIiIjMzMzMzMyIiIiIiMzMzMzMzMzMiIiIiRBEAADMiIiIiMzMzMzMzIiIiIiIzMzMzMzMzMyIiIiJEEQAAMyIiIiIzMzMzMzMiIiIiIjMzMzMzMzMzIiIiIkQRAAAzIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiRBEAADMiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiJEEQAAMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMAAAAzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMwAAAABVEVURVRFVEVURVRFVEVURVRFVEVURVRFVEVURAAAAAFURVRFVEVURVRFVEVURVRFVEVURVRFVEVURVREAAAAAZgBmAGYAZgBmAGYAZgBmAGYAZgBmAGYAZgBmAAAAAABmAGYAZgBmAGYAZgBmAGYAZgBmAGYAZgBmAGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA///////////////////////////////////////////////////////////////////////////////////////////////////////////+ZmZmZmZmZ/5mZmZmZmZn+AAAAAAAAAf4AAAAAAAAB/gAAAAAAAAB+AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAAeAAAAAAAAAB4AAAAAAAAAHgAAAAAAAAB+AAAAAAAAAH+AAAAAAAAAf4AAAAAAAAB/mZmZmZmZmf+ZmZmZmZmZ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8=" />
+
+		<style>
+/* Backdrop */
+
+@keyframes background-scroll {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: -864px -576px;
+	}
+}
+
+body {
+	align-items:           center;
+	animation:             10s infinite linear background-scroll;
+	background-attachment: fixed;
+	background-color:      #080808;
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAAXNSR0IB2cksfwAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABhQTFRFAAAACAgIEBAQGBgYICAgKCgoMDAwODg4duOvLgAAA3xJREFUeNrt3dFyqjAUBVDKrfr/f1xq5nZoO1JNciAhaz/kCQe6HDehSpjeZDMTAkCAAAECBAgQIAEECBAgQIAAARJAgAABAgQIECABdBag2+12vV7jRkCAAIUCTdMECNDIQMvfcLlc4kZAgAYHeg8OIEADAt3uWToi/Q3/IjPPc+qjH7NqQIBCgZbjqz6+dGpP5+BonQS07OVyz7qPAAEKBUpXcXXHvA7aAeirgwAB2gcoaM56ng4CBKgYKOI4nq+hDjoIEKB6QL/b5Mc+HpVONtB2B23s65kjqd9BgAD1BrTdQdWB+usgQIB0ECBA9YDMpAEBegkovSxjZwd20KPq+fOtzekgQIBqnMUyjA6cSZcAZZY0IEDdAukgQE7zZtKAAMVdrD5fAQd20H7fzQMC1BtQlZn0mTsI0CmA5nt0ECBA0UBm0oAAnexHnH4nDej0QHNASjqobiFW6CBAgAqAlqQPZN2xpINCgXLuWQUEqAzIPauAAIUCfW5x37ru2NpMOlVbTgcBAlQMdGym/5mDM30PIECDAK3n9KkjgsbulwkEBKgs1nIFBAgQIED9Aq1n1UEBBGhwoGPeFQSAAAECBAgQIEACCBAgQIAAAQIkgAABAgQIECBAAggQIECAAAECBEgAAQIECBAgQIAEECBAgAABAgRIHgOl5efiRkCAAIUCvbQcHiBA5wM6ajERQIAGAXoPDiBAAwKtVwDfYYXirxXAAQEaBKiFpzFtZ3n/qo+AAO0G1MJzLLaz/3M+AAGqCNR4BwXN6QEB2g2o8Q465LGmgABVBMp4vvv2o9+rd9D28Tz5QHpAgI4C2u6g6kCFHQQIUHdAOggQoAM7qLWZ9Evvx4iXGoDaA8rooEcf8j8PPaOD0qsyFI4saUCAymbSJUB5HZRhBAhQI0CNdxAgQL0DNT6Tzj7Nj3KpAah5oCodFPrdfF4ntlXSgAYGqjKTPvD/QYAA6aAqM+l0sgcEqDugLr7V+AJyqQGoO6D2fyfd9I84AQF6vYPqfuDLO2gOCCBAuwH97qBQoIx7VtPGdUdAgHYDcs8qIEDnuOs5VVtGB30e8X3juiMgQPsApRekzMGZvuet1QACVBdoPWdNHRE0dr9MICBAZUDWcgUECBAgQP0CrWfVQQEEaHAgAQQIECBAgAABAiSAAAECBAgQIEACCBAgQIAAnSUf5s59S3zosQwAAAAASUVORK5CYII=");
+	box-sizing:            border-box;
+	display:               flex;
+	font:                  12pt "Roboto", "Helvetica", "Arial", sans-serif;
+	justify-content:       center;
+	margin:                0;
+	min-height:            100vh;
+	padding:               8rem;
+	user-select:           none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body {
+		animation: none;
+	}
+}
+
+/* Main window */
+
+main {
+	backdrop-filter:  blur(0.8rem);
+	background-image:
+		linear-gradient(to bottom right, #50505080, #24242480, #08080880);
+	border:           1px solid #404040;
+	box-shadow:       0.4rem 0.4rem 0 #00000080;
+	color:            #ffffff;
+	padding:          2rem 6rem;
+	text-align:       center;
+	text-shadow:      0.1rem 0.1rem 0 #00000080;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	main {
+		backdrop-filter:  none;
+		background-color: #282828;
+		background-image: none;
+	}
+}
+
+/* Headings and links */
+
+h1, h2, h3 {
+	color: #ffffff;
+}
+
+small {
+	color: #707070;
+}
+
+h1 > small {
+	color:     #f0e800;
+	font-size: 11pt;
+}
+
+a,
+a:visited {
+	color:           #a08830;
+	text-decoration: none;
+}
+
+a:hover {
+	color:           #c8b040;
+	text-decoration: underline;
+}
+
+label[for] {
+	cursor: pointer;
+}
+
+/* Controls */
+
+.control {
+	align-items: center;
+	display:     flex;
+	flex-flow:   row wrap;
+}
+
+.control > :first-child {
+	color:      #e0e0e0;
+	cursor:     unset;
+	flex-grow:  1;
+	text-align: left;
+}
+
+/* Buttons */
+
+button,
+[role=button] {
+	appearance:       none;
+	background-color: transparent;
+	border:           none;
+	color:            #ffffff;
+	cursor:           pointer;
+	display:          inline-block;
+	font:             12pt "Roboto", "Helvetica", "Arial", sans-serif;
+	min-width:        8rem;
+	outline:          none;
+	padding:          0.6rem 2rem;
+	position:         relative;
+	text-shadow:      0.1rem 0.1rem 0 #00000080;
+}
+button::before,
+button::after,
+[role=button]::before,
+[role=button]::after {
+	content:  "";
+	height:   100%;
+	left:     0;
+	position: absolute;
+	top:      0;
+	width:    100%;
+	z-index:  -1;
+}
+button::before,
+[role=button]::before {
+	background-color: #080808;
+}
+button::after,
+[role=button]::after {
+	background-color: #c8b040;
+	transform:        scaleX(0);
+	transform-origin: 0 50%;
+}
+
+p > button:only-child,
+p > [role=button]:only-child {
+	min-width: 14rem;
+}
+
+button:hover::before,
+[role=button]:hover::before {
+	background-color: #a08830;
+}
+button:hover::after,
+[role=button]:hover::after {
+	transform:  scaleX(1);
+	transition: transform 160ms ease-out;
+}
+
+button:active::after,
+[role=button]:active::after {
+	visibility: hidden;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+	button:hover::after,
+	[role=button]:hover::after {
+		transition: none;
+	}
+}
+
+button:disabled {
+	color:  #383838;
+	cursor: not-allowed;
+}
+button:disabled::before {
+	background-color: #08080880;
+}
+button:disabled::after {
+	visibility: hidden;
+}
+
+/* Text boxes */
+
+input[type=text] {
+	appearance:       none;
+	background-color: #000000;
+	border:           none;
+	color:            #ffffff;
+	font:             12pt "Roboto", "Helvetica", "Arial", sans-serif;
+	outline:          none;
+	padding:          0.6rem 1rem;
+	text-align:       center;
+}
+input[type=text]::selection {
+	background-color: #c8b040;
+}
+
+input[type=text]:invalid {
+	background: #200800;
+	outline:    0.1rem solid #c03010;
+}
+
+/* Checkboxes and radio buttons */
+
+@keyframes checkbox-select {
+	0% {
+		background-color: #ffffff;
+	}
+	100% {
+		background-color: #c8b040;
+	}
+}
+
+input[type=checkbox],
+input[type=radio] {
+	appearance:       none;
+	background-color: #080808;
+	border:           0.3rem solid #080808;
+	box-sizing:       border-box;
+	cursor:           pointer;
+	height:           1.4rem;
+	margin:           0 0.5rem;
+	position:         relative;
+	width:            1.4rem;
+}
+
+input[type=checkbox]:hover,
+input[type=radio]:hover {
+	background-color: #505050;
+}
+
+input[type=checkbox]:checked,
+input[type=radio]:checked {
+	animation:        240ms ease-out checkbox-select;
+	background-color: #c8b040;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	input[type=checkbox]:checked,
+	input[type=radio]:checked {
+		animation: none;
+	}
+}
+		</style>
+
+		<script>
+addEventListener("load", () => {
+
+/* Utilities */
+
+function regionsOverlap(offset1, length1, offset2, length2) {
+	const end1 = offset1 + length1;
+	const end2 = offset2 + length2;
+
+	return !((end1 <= offset2) || (end2 <= offset1));
+}
+
+function patchUint32s(buffer, offset, ...arrays) {
+	const view = new DataView(buffer);
+
+	for (const array of arrays) {
+		for (const value of array) {
+			view.setUint32(offset, value, true);
+			offset += 4;
+		}
+	}
+
+	return offset;
+}
+
+function parsePSEXE(psexe) {
+	if (psexe.byteLength < 0x800)
+		throw new Error(
+			"The selected executable is not a valid PS1 executable."
+		);
+
+	const view = new DataView(psexe);
+
+	if (view.getBigUint64(0x00, false) !== 0x50532d5820455845n)
+		throw new Error(
+			"The selected executable is not a valid PS1 executable."
+		);
+
+	const entryPoint  = view.getUint32(0x10, true);
+	const gp          = view.getUint32(0x14, true);
+	const address     = view.getUint32(0x18, true);
+	const length      = view.getUint32(0x1c, true);
+	const stackOffset = view.getUint32(0x30, true);
+	const stackLength = view.getUint32(0x34, true);
+
+	const sp   = stackOffset ? (stackOffset + stackLength) : -1;
+	const body = new Uint8Array(psexe, 0x800, length);
+
+	return { entryPoint, gp, sp, address, body };
+}
+
+/* Relocation stub generator */
+
+function makePrologue(ramConfig = -1, vramConfig = -1) {
+	const prologue = [
+		0x3c04bf80 // lui   $a0, 0xbf80
+	];
+
+	if (ramConfig  >= 0)
+		prologue.push(
+			0x34050000 | (ramConfig & 0xffff), // ori   $a1, $0, ramConfig
+			0xac851060                         // sw    $a1, 0x1060($a0)
+		);
+	if (vramConfig >= 0)
+		prologue.push(
+			0x3c060900,                         // lui   $a2, 0x0900
+			0x34c60000 | (vramConfig & 0xffff), // ori   $a2, vramConfig
+			0xac861814                          // sw    $a2, 0x1814($a0)
+		);
+
+	prologue.splice(-1, 0, 0x04110001); // bal   .LcopyInit
+	return prologue;
+}
+
+function makeStubBody(address, length, epilogueLength) {
+	const sourceOffset = (20 + epilogueLength) * 4;
+	length            -= 16;
+
+	return [
+		// .LcopyInit:
+		0x27e40000 | (sourceOffset    & 0x7fff), // addiu $a0, $ra, sourceOffset
+		0x3c050000 | ((address >> 16) & 0xffff), // lui   $a1, address >> 16
+		0x34a50000 | ((address >>  0) & 0xffff), // ori   $a1, address & 0xffff
+		0x3c060000 | ((length  >> 16) & 0xffff), // lui   $a2, length  >> 16
+		0x34c60000 | ((length  >>  0) & 0xffff), // ori   $a2, length  & 0xffff
+		// .LcopyLoop:
+		0x8c880000,                              // lw    $t0,  0($a0)
+		0x8c890004,                              // lw    $t1,  4($a0)
+		0x8c8a0008,                              // lw    $t2,  8($a0)
+		0x8c8b000c,                              // lw    $t3, 12($a0)
+		0xaca80000,                              // sw    $t0,  0($a1)
+		0xaca90004,                              // sw    $t1,  4($a1)
+		0xacaa0008,                              // sw    $t2,  8($a1)
+		0xacab000c,                              // sw    $t3, 12($a1)
+		0x24840010,                              // addiu $a0, 16
+		0x24a50010,                              // addiu $a1, 16
+		0x1cc0fff5,                              // bgtz  $a2, .LcopyLoop
+		0x24c6fff0,                              // addiu $a2, -16
+		// .LflushCache:
+		0x240800a0,                              // li    $t0, 0xa0
+		0x0100f809,                              // jalr  $t0
+		0x24090044                               // li    $t1, 0x44
+	];
+}
+
+function makeEpilogue(entryPoint, gp = -1, sp = -1) {
+	const epilogue = [
+		0x3c040000 | ((entryPoint >> 16) & 0xffff), // lui   $a0, entryPoint >> 16
+		0x34840000 | ((entryPoint >>  0) & 0xffff)  // ori   $a0, entryPoint & 0xffff
+	];
+
+	if (gp >= 0)
+		epilogue.push(
+			0x3c1c0000 | ((gp >> 16) & 0xffff), // lui   $gp, gp >> 16
+			0x379c0000 | ((gp >>  0) & 0xffff)  // ori   $gp, gp & 0xffff
+		);
+	if (sp >= 0)
+		epilogue.push(
+			0x3c1d0000 | ((sp >> 16) & 0xffff), // lui   $sp, sp >> 16
+			0x37bd0000 | ((sp >>  0) & 0xffff)  // ori   $sp, sp & 0xffff
+		);
+
+	epilogue.splice(-1, 0, 0x00800008); // jr    $a0
+	return epilogue;
+}
+
+/* Patcher core */
+
+const BIOS_LENGTH       = 0x80000;
+const BIOS_SHELL_OFFSET = 0x18000;
+const BIOS_SHELL_LENGTH = 0x4c000;
+
+const SHELL_RAM_ADDRESS = 0x80030000;
+
+function patchBIOS(bios, psexe, ramConfig = -1, vramConfig = -1) {
+	if (bios.byteLength !== BIOS_LENGTH)
+		throw new Error(
+			`The selected BIOS ROM has an invalid size.\n` +
+			`ROM size: ${bios.byteLength} bytes\n` +
+			`Expected size: ${BIOS_LENGTH} bytes`
+		);
+
+	const { entryPoint, gp, sp, address, body } = parsePSEXE(psexe);
+
+	const prologue = makePrologue(ramConfig, vramConfig);
+	const epilogue = makeEpilogue(entryPoint, gp, sp);
+	const stubBody = makeStubBody(address, body.byteLength, epilogue.length);
+
+	const totalLength = 0
+		+ (prologue.length + stubBody.length + epilogue.length) * 4
+		+ body.byteLength;
+
+	if (totalLength > BIOS_SHELL_LENGTH)
+		throw new Error(
+			`The selected executable is too large to fit in a BIOS ROM.\n` +
+			`Executable size (including stub): ${totalLength} bytes\n` + 
+			`Maximum allowed shell size: ${BIOS_SHELL_LENGTH} bytes`
+		);
+	if (regionsOverlap(address, body.byteLength, SHELL_RAM_ADDRESS, totalLength))
+		throw new Error(
+			"The selected executable would overlap the self-relocating stub " +
+			"memory during relocation."
+		);
+
+	const patched = bios.slice();
+	const offset  =
+		patchUint32s(patched, BIOS_SHELL_OFFSET, prologue, stubBody, epilogue);
+
+	new Uint8Array(patched).set(body, offset);
+	return patched;
+}
+
+/* File handling */
+
+const saveLink = document.createElement("a");
+
+function readFile(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+
+		reader.addEventListener("load",  () => resolve(reader.result));
+		reader.addEventListener("error", () => reject());
+		reader.readAsArrayBuffer(file);
+	});
+}
+
+function saveFile(filename, ...parts) {
+	const blob = new Blob(parts, { type: "application/octet-stream" });
+
+	saveLink.href     = URL.createObjectURL(blob);
+	saveLink.download = filename;
+
+	saveLink.click();
+	URL.revokeObjectURL(blob);
+}
+
+/* Form handling */
+
+const form = document.querySelector("form");
+
+function updateSubmitButton() {
+	const button = form.querySelector("button[type=submit]");
+	const valid  = form.checkValidity();
+
+	button.disabled = !valid;
+	button.title    = valid
+		? ""
+		: "The BIOS ROM to patch and executable must be selected first.";
+}
+
+async function handleFormSubmit(event) {
+	event.preventDefault();
+
+	const fields     = new FormData(form);
+	const bios       = fields.get("bios");
+	const psexe      = fields.get("psexe");
+	const ramConfig  = fields.get("ram-config");
+	const vramConfig = fields.get("vram-config");
+
+	try {
+		const patched = patchBIOS(
+			await readFile(bios),
+			await readFile(psexe),
+			ramConfig ? parseInt(ramConfig, 16) : -1,
+			parseInt(vramConfig)
+		);
+
+		saveFile(`${bios.name}-patched.bin`, patched);
+	} catch (error) {
+		alert(error.message);
+	}
+}
+
+updateSubmitButton();
+form.addEventListener("input",  updateSubmitButton);
+form.addEventListener("submit", handleFormSubmit);
+
+});
+		</script>
+	</head>
+
+	<body>
+		<main>
+			<h1>
+				<small lang="ja">スパイシージェイペグ</small>
+				<br />PS1 BIOS shell patcher
+			</h1>
+
+			<form>
+				<input
+					id="bios"
+					name="bios"
+					type="file"
+					accept=".bin,.rom"
+					required
+					style="display: none;"
+				/>
+				<input
+					id="psexe"
+					name="psexe"
+					type="file"
+					accept=".exe,.psexe,.ps-exe,.00"
+					required
+					style="display: none;"
+				/>
+
+				<p>
+					<label for="bios" role="button">Select BIOS image</label>
+					<label for="psexe" role="button">Select executable</label>
+				</p>
+
+				<p class="control">
+					<label for="ram-config">Override main RAM configuration (hex)</label>
+					<input
+						id="ram-config"
+						name="ram-config"
+						type="text"
+						placeholder="0000"
+						maxlength="4"
+						pattern="^[0-9A-Fa-f]{4}$"
+						autocomplete="off"
+						style="width: 4rem;"
+					/>
+				</p>
+				<p class="control">
+					<label>Override VRAM size</label>
+					<input id="vram-none" name="vram-config" value="-1" type="radio" checked />
+					<label for="vram-none">Off</label>
+					<input id="vram-1mb" name="vram-config" value="0" type="radio" />
+					<label for="vram-1mb">1 MB</label>
+					<input id="vram-2mb" name="vram-config" value="1" type="radio" />
+					<label for="vram-2mb">2 MB</label>
+				</p>
+				<p>
+					<small>
+						<a
+							href="https://psx-spx.consoledev.net/memorycontrol"
+							target="_blank"
+						>More information on RAM configuration values...</a>
+					</small>
+				</p>
+
+				<p><button type="submit">Patch</button></p>
+			</form>
+		</main>
+	</body>
+</html>
