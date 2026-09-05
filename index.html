@@ -372,6 +372,12 @@ function makeEpilogue(entryPoint, gp = -1, sp = -1) {
 			0x37bd0000 | ((sp >>  0) & 0xffff)  // ori   $sp, sp & 0xffff
 		);
 
+	// The jump is placed before the last instruction so that it lands in the
+	// delay slot. That instruction must not be the one setting up $a0, as the
+	// jump target is latched before the delay slot runs.
+	if ((gp < 0) && (sp < 0))
+		epilogue.push(0x00000000); // nop
+
 	epilogue.splice(-1, 0, 0x00800008); // jr    $a0
 	return epilogue;
 }
@@ -438,12 +444,15 @@ function readFile(file) {
 
 function saveFile(filename, ...parts) {
 	const blob = new Blob(parts, { type: "application/octet-stream" });
+	const url  = URL.createObjectURL(blob);
 
-	saveLink.href     = URL.createObjectURL(blob);
+	saveLink.href     = url;
 	saveLink.download = filename;
 
 	saveLink.click();
-	URL.revokeObjectURL(blob);
+
+	// Revoking synchronously can race the download the click just queued.
+	setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 /* Form handling */
